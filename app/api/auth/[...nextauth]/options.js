@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+// import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -7,8 +7,9 @@ export const options = {
     GithubProvider({
       profile(profile) {
         console.log("profile Github: ", profile);
+        
         let userRole = "Github User";
-        if (profile?.email == "github.com/FaisalSagheer.com") {
+        if (profile?.email == "faisalsagheerqureshi@gmail.com") {
           userRole = "admin";
         }
         return {
@@ -36,7 +37,7 @@ export const options = {
   ],
   callbacks:{
     async jwt ({token,user}){
-        if (user)token.role = token.role;
+        if (user)token.role = user.role;
         return token;
     },
     async session ({session,token}){
@@ -46,4 +47,4 @@ export const options = {
   }
 };
 
-export default NextAuth(options);
+// export default NextAuth(options);

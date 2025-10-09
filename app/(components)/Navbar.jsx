@@ -2,9 +2,9 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
-import options from "../api/auth/[...nextauth]/options";
+import { options } from "../api/auth/[...nextauth]/options";
 
-const Navbar = async() => {
+const Navbar = async () => {
   const session = await getServerSession(options);
   return (
     <div className="bg-gray-800 text-gray-100 px-10 py-6">
