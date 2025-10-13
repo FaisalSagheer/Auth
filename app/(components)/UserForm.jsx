@@ -23,11 +23,13 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    
     const res = await fetch("/api/Users", {
       method: "POST",
       body: JSON.stringify({ formData }),
-      "content-type": "application/json" ,
+      headers: { "content-type": "application/json" },
     });
+
     if (!res.ok) {
       const response = await res.json();
       setErrorMsg(response.message);
@@ -50,8 +52,8 @@ const UserForm = () => {
                 name="name"
                 type="text"
                 onChange={handleChange}
-                value={formData.name}
                 required={true}
+                value={formData.name}
                 className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
             </div>
@@ -66,8 +68,8 @@ const UserForm = () => {
                 id="email"
                 name="email"
                 type="text"
-                required={true}
                 onChange={handleChange}
+                required={true}
                 value={formData.email}
                 className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
@@ -93,8 +95,8 @@ const UserForm = () => {
                 id="password"
                 name="password"
                 type="password"
-                required={true}
                 onChange={handleChange}
+                required={true}
                 value={formData.password}
                 className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
