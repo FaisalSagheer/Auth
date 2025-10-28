@@ -13,7 +13,9 @@ const Navbar = async () => {
         <div className="flex gap-4">
           <Link href="/">Home</Link>
           <Link href="/CreateUser">Create User</Link>
+          <Link href="/CreateCourse">Create Course</Link>
           <Link href="/ClientMember">Client Member</Link>
+          <Link href="/Courses">Courses</Link>
           <Link href="/Member">Member</Link>
           <Link href="/Public">Public</Link>
         </div>
