@@ -2,7 +2,7 @@ import User from "@/(models)/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
-export default async function POST(req) {
+export async function POST(req) {
   try {
     const body = await req.json();
     const userData = body.formData;
@@ -10,7 +10,7 @@ export default async function POST(req) {
     if (!userData?.email || !userData.password) {
       return NextResponse.json(
         { message: "All fields are required" },
-        { status: 400 }
+        { status: 400 } 
       );
     }
 
@@ -19,7 +19,7 @@ export default async function POST(req) {
       .lean()
       .exec();
     if (duplicate) {
-      return NextResponse.json({ message: "Duplication" }, { status: 409 });
+      return NextResponse.json({ message: "Duplication Email" }, { status: 409 });
     }
     const hashPassword = await bcrypt.hash(userData.password,10)
     userData.password = hashPassword;

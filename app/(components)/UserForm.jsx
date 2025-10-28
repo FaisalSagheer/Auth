@@ -27,7 +27,7 @@ const UserForm = () => {
     const res = await fetch("/api/Users", {
       method: "POST",
       body: JSON.stringify({ formData }),
-      headers: { "content-type": "application/json" },
+      headers: {"Content-type": "application/json"} ,
     });
 
     if (!res.ok) {
