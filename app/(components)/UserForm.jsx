@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDownIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -8,6 +9,7 @@ const UserForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    role: "",
     password: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
@@ -23,17 +25,18 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
-    
+
     const res = await fetch("/api/Users", {
       method: "POST",
       body: JSON.stringify({ formData }),
-      headers: {"Content-type": "application/json"} ,
+      headers: { "Content-type": "application/json" },
     });
 
     if (!res.ok) {
       const response = await res.json();
       setErrorMsg(response.message);
-    } else {
+    } 
+    else {
       router.refresh();
       router.push("/");
     }
@@ -72,6 +75,34 @@ const UserForm = () => {
                 required={true}
                 value={formData.email}
                 className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-black/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-3">
+            <label
+              htmlFor="role"
+              className="block text-sm/6 font-medium text-gray-900"
+            >
+              Role
+            </label>
+            <div className="mt-2 grid grid-cols-1">
+              <select
+                id="role"
+                name="role"
+                className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                onChange={handleChange}
+                value={formData.role}
+                required={true}
+              >
+                <option value="" disabled hidden>Select a role</option>
+                <option value="admin">Admin</option>
+                <option value="parent">Parent</option>
+                {/* <option>Teacher</option> */}
+              </select>
+              <ChevronDownIcon
+                aria-hidden="true"
+                className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
               />
             </div>
           </div>

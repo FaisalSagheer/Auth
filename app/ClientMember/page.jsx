@@ -17,6 +17,7 @@ const ClientMember = () => {
       <h1>
         Member Client Session
       </h1>
+      <p>{session?.user?.name}</p>
       <p>{session?.user?.email}</p>
       <p>{session?.user?.role}</p>
     </div>

@@ -5,43 +5,43 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 export const options = {
   providers: [
-    GithubProvider({
-      profile(profile) {
-        console.log("profile Github: ", profile);
+    // GithubProvider({
+    //   profile(profile) {
+    //     console.log("profile Github: ", profile);
 
-        let userRole = "Github User";
-        if (profile?.email == "faisalsagheerqureshi@gmail.com") {
-          userRole = "admin";
-        }
-        return {
-          ...profile,
-          role: userRole,
-        };
-      },
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_Secret,
-    }),
+    //     let userRole = "Github User";
+    //     if (profile?.email == "faisalsagheerqureshi@gmail.com") {
+    //       userRole = "admin";
+    //     }
+    //     return {
+    //       ...profile,
+    //       role: userRole,
+    //     };
+    //   },
+    //   clientId: process.env.GITHUB_ID,
+    //   clientSecret: process.env.GITHUB_Secret,
+    // }),
 
-    GoogleProvider({
-      profile(profile) {
-        console.log("profile Google: ", profile);
-        let userRole = "Google User";
-        return {
-          ...profile,
-          id: profile.sub,
-          role: userRole,
-        };
-      },
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_Secret,
-    }),
+    // GoogleProvider({
+    //   profile(profile) {
+    //     console.log("profile Google: ", profile);
+    //     let userRole = "Google User";
+    //     return {
+    //       ...profile,
+    //       id: profile.sub,
+    //       role: userRole,
+    //     };
+    //   },
+    //   clientId: process.env.GOOGLE_ID,
+    //   clientSecret: process.env.GOOGLE_Secret,
+    // }),
     Credentials({
       name: "Credentials",
       credentials: {
-        email: {
-          label: "email",
+        name: {
+          label: "name",
           type: "text",
-          placeholder: "your-email",
+          placeholder: "your-name",
         },
         password: {
           label: "password",
@@ -51,7 +51,7 @@ export const options = {
       },
       async authorize(credentials) {
         try {
-          const foundUser = await User.findOne({ email: credentials.email })
+          const foundUser = await User.findOne({ name: credentials.name })
             .lean()
             .exec();
 
@@ -64,7 +64,7 @@ export const options = {
             if (match) {
               console.log("Good Pass");
               delete foundUser.password;
-              foundUser["role"] = "Unverified Role";
+              // foundUser["role"] = "Unverified";
               // foundUser["role"] = "admin";
               return foundUser;
             }
