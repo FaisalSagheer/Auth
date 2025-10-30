@@ -1,41 +1,38 @@
-
-import { useSession } from "next-auth/react"
-import { redirect } from "next/navigation"
-
-const Courses = () => {
+async function Courses() {
   const { MongoClient } = require('mongodb');
 
-  async function runGetStarted() {
-    // Replace the uri string with your connection string
-    const uri = process.env.MONGODB_URI;
-    const client = new MongoClient(uri);
+  const uri = process.env.MONGODB_URI;
+  const client = new MongoClient(uri);
 
-    try {
-      const database = client.db('AppDB');
-      const movies = database.collection('courses');
+  try {
+    const database = client.db('AppDB');
+    const courses = database.collection('courses');
 
-      // console.log(movie);
-      // Queries for a movie that has a title value of 'Back to the Future'
-      // const query = { name: 'Urdu' };
-      // const movie = await movies.findOne(query);
+    // Queries for a movie that has a title value of 'Back to the Future'
+    // const query = { name: 'Urdu' };
+    const course = await courses.find({}).limit(10).toArray();
+    // console.log(course);
 
-    } catch(error) {
-      console.log(error)  
-    }
-  }
-  runGetStarted().catch(console.dir);
-
-
-  return (
-    <div>
-      <h1>
+    return (
+      <>
         Courses
-      </h1>
-      <div>
-       
-      </div>
-    </div>
-  )
+        <div className='grid grid-cols-2 gap-4 items-center mt-20'>
+          {
+           course.map((i,index)=>
+            <div className='flex border-1' key={index}>
+            {/* <span>{i._id}</span> */}
+            <span>{i.name}</span>
+            <span>{i.subTitle}</span>
+            <span>{i.description}</span>
+            </div>
+          )
+          }
+        </div>
+      </>
+    )
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export default Courses
